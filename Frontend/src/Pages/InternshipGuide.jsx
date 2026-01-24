@@ -1,76 +1,92 @@
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import logo from "../../public/GraphuraLogo.png";
+import { Link } from "react-router-dom";
+import logo from "../../public/AthenuraLogo.png"; 
 
-export default function TermsAndConditions() {
-  const [activeSection, setActiveSection] = useState("definitions");
+export default function AthenuraTerms() {
+  const [activeSection, setActiveSection] = useState("acceptance");
 
+  // Data structure for the Sidebar to auto-generate links
   const sections = [
-    { id: "definitions", title: "1. Definitions" },
-    { id: "scope", title: "2. Internship Scope and Responsibilities" },
-    { id: "duration", title: "3. Duration and Schedule" },
-    { id: "stipend", title: "4. Stipend" },
-    { id: "ip", title: "5. Intellectual Property" },
-    { id: "confidentiality", title: "6. Confidentiality" },
-    { id: "conduct", title: "7. Conduct and Compliance" },
-    { id: "termination", title: "8. Termination" },
-    { id: "warranties", title: "9. Warranties and Representations" },
-    { id: "liability", title: "10. Limitation of Liability" },
-    { id: "indemnification", title: "11. Indemnification" },
-    { id: "force-majeure", title: "12. Force Majeure" },
-    { id: "governing-law", title: "13. Governing Law and Dispute Resolution" },
-    { id: "miscellaneous", title: "14. Miscellaneous" },
-    { id: "acknowledgment", title: "15. Acknowledgment" }
+    { id: "acceptance", title: "1. Acceptance of Terms" },
+    { id: "eligibility", title: "2. Eligibility" },
+    { id: "use-of-service", title: "3. Use of Services" },
+    { id: "responsibilities", title: "4. User Responsibilities" },
+    { id: "internship-programs", title: "5. Internship Programs" },
+    { id: "offer-letter", title: "6. Offer Letter" },
+    { id: "roles", title: "7. Roles & Conduct" },
+    { id: "ip", title: "8. Intellectual Property" },
+    { id: "confidentiality", title: "9. Confidentiality" },
+    { id: "certificate", title: "10. Internship Certificate" },
+    { id: "outcomes", title: "11. No Guarantee" },
+    { id: "liability", title: "12. Limitation of Liability" },
+    { id: "indemnification", title: "13. Indemnification" },
+    { id: "termination", title: "14. Termination" },
+    { id: "links", title: "15. Third-Party Links" },
+    { id: "law", title: "16. Governing Law" },
+    { id: "changes", title: "17. Changes to Terms" },
+    { id: "contact", title: "18. Contact Information" },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-blue-50 text-gray-800 scroll-smooth selection:bg-[#50B4C6] selection:text-white font-sans">
+      
+      {/* Styles for Animations */}
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up {
+          animation: fadeInUp 0.6s ease-out forwards;
+          opacity: 0;
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        
+        /* Custom Scrollbar for Sidebar */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #50B4C6; border-radius: 4px; }
+      `}</style>
+
       {/* Navigation Header */}
-      <header className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50 border-b border-gray-200">
+      <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50 border-b border-[#50B4C6]/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-          <Link to="/" className="flex items-center space-x-3">
-            <img
-              src={logo}
-              alt="Graphura Logo"
-              className="w-32 h-auto object-contain"
-            />
+          <Link to="/" className="flex items-center space-x-3 hover:scale-105 transition-transform duration-300">
+            <img src={logo} alt="Athenura Logo" className="w-32 h-auto object-contain" />
           </Link>
           <div className="flex space-x-4">
-            <Link
-              to="/signup"
-              className="px-6 py-2 font-semibold border border-purple-600 text-purple-600 rounded-lg hover:bg-purple-600 hover:text-white transition-all duration-300"
-            >
+            <Link to="/signup" className="px-6 py-2 font-semibold border-2 border-[#50B4C6] text-[#50B4C6] rounded-full hover:bg-[#50B4C6] hover:text-white transition-all duration-300">
               Sign In
             </Link>
-            <Link
-              to="/register"
-              className="px-6 py-2 font-semibold bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all duration-300 shadow-md"
-            >
+            <Link to="/register" className="px-6 py-2 font-semibold bg-[#50B4C6] text-white rounded-full hover:bg-[#3ea0b2] hover:shadow-[0_0_15px_rgba(80,180,198,0.5)] transition-all duration-300 shadow-md">
               Register
             </Link>
           </div>
         </div>
       </header>
 
-      <div className="pt-24 pb-16">
-        <div className="max-w-6xl mx-auto px-6">
+      <div className="pt-28 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          
           {/* Page Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Terms and Conditions
+          <div className="text-center mb-12 animate-fade-up">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+              Terms and <span className="text-[#50B4C6]">Conditions</span>
             </h1>
-            <p className="text-gray-500 max-w-3xl mx-auto">
-              These Terms and Conditions govern the internship program offered by Graphura India Private Limited.
-              By accepting an internship offer or participating in our program, you agree to be bound by these Terms.
+            <p className="text-gray-500 max-w-3xl mx-auto text-lg">
+              Please read these terms carefully before participating in Athenura’s programs.
             </p>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar Navigation */}
-            <div className="lg:w-80 flex-shrink-0">
-              <div className="sticky top-32 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-                <h3 className="font-bold text-gray-900 mb-4 text-lg">Quick Navigation</h3>
-                <nav className="space-y-2">
+            
+            {/* Sidebar Navigation (Sticky) */}
+            <div className="lg:w-80 flex-shrink-0 animate-fade-up delay-100">
+              <div className="sticky top-32 bg-white rounded-2xl shadow-xl shadow-gray-100 border border-[#50B4C6]/20 p-6 overflow-hidden">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-[#50B4C6]/10 rounded-bl-full -mr-4 -mt-4"></div>
+                <h3 className="font-bold text-gray-900 mb-4 text-lg relative z-10">Table of Contents</h3>
+                <nav className="space-y-1 relative z-10 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
                   {sections.map((section) => (
                     <button
                       key={section.id}
@@ -78,10 +94,10 @@ export default function TermsAndConditions() {
                         setActiveSection(section.id);
                         document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                      className={`block w-full text-left px-4 py-3 rounded-xl transition-all duration-200 text-sm font-medium ${
                         activeSection === section.id
-                          ? 'bg-purple-100 text-purple-700 font-semibold border-l-4 border-purple-600'
-                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                          ? 'bg-[#50B4C6] text-white shadow-md shadow-[#50B4C6]/30 translate-x-1'
+                          : 'text-gray-600 hover:bg-cyan-50 hover:text-[#50B4C6]'
                       }`}
                     >
                       {section.title}
@@ -92,322 +108,229 @@ export default function TermsAndConditions() {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1">
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-                {/* Introduction */}
-                <div className="mb-8 p-6 bg-blue-50 rounded-xl border border-blue-200">
-                  <p className="text-gray-700">
-                    These Terms and Conditions ("Terms") govern the internship program offered by 
-                    <strong> Graphura India Private Limited</strong> ("Graphura," "we," "us," or "our"), 
-                    a digital marketing agency with its principal place of business at Gurgaon, Haryana, 
-                    to individuals accepted as interns ("Intern," "you," or "your").
-                  </p>
-                </div>
-
-                {/* Terms Content */}
-                <div className="prose prose-lg max-w-none">
-                  {/* Section 1: Definitions */}
-                  <section id="definitions" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">1. Definitions</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <strong>1.1 Internship:</strong> The temporary, unpaid, or paid (as specified in the Offer Letter) work experience program provided by Graphura, involving tasks related to digital marketing, logo design, website development, or administrative support.
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <strong>1.2 Offer Letter:</strong> The document issued by Graphura outlining the internship's scope, duration, stipend (if any), and other specific terms.
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <strong>1.3 Confidential Information:</strong> Any non-public information disclosed to the Intern by Graphura, including but not limited to client data, business strategies, marketing plans, proprietary methods, and project details.
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <strong>1.4 Work Product:</strong> Any materials, designs, code, content, or deliverables created by the Intern during the Internship, whether individually or collaboratively.
-                      </div>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <strong>1.5 Ideas:</strong> Any concepts, designs, strategies, or creative proposals developed or presented by Graphura or the Intern during the Internship.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 2: Internship Scope */}
-                  <section id="scope" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">2. Internship Scope and Responsibilities</h2>
-                    <div className="space-y-6 text-gray-700">
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-3">2.1 Scope:</h3>
-                        <p>Graphura shall provide the Intern with training and work experience in areas such as social media management (e.g., content creation for platforms like Instagram, LinkedIn), logo design, website development, or other tasks as outlined in the Offer Letter.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-3">2.2 Intern Responsibilities:</h3>
-                        <ul className="list-disc list-inside space-y-2 ml-4">
-                          <li>Perform assigned tasks diligently, professionally, and in accordance with Graphura's instructions.</li>
-                          <li>Adhere to Graphura's policies, work hours, and workplace guidelines.</li>
-                          <li>Maintain regular communication with the assigned supervisor and report progress as required.</li>
-                          <li>Use Graphura's equipment, software, and resources solely for internship-related tasks.</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-3">2.3 No Employment Relationship:</h3>
-                        <p>The Internship does not constitute an employment relationship. The Intern is not entitled to employee benefits, including but not limited to salary, leave, insurance, or provident fund contributions, unless otherwise specified in the Offer Letter.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-3">2.4 Training and Supervision:</h3>
-                        <p>Graphura shall provide reasonable training and supervision to support the Intern's learning objectives, but the Internship is primarily for educational purposes.</p>
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 3: Duration */}
-                  <section id="duration" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">3. Duration and Schedule</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>3.1 Duration:</strong> The Internship shall commence on the date mentioned in the Offer Letter and continue for the period specified in the Offer Letter, unless terminated earlier in accordance with Section 8.
-                      </div>
-                      <div>
-                        <strong>3.2 Schedule:</strong> The Intern shall work the hours and days specified in the Offer Letter, subject to reasonable adjustments by Graphura. Any remote work arrangements must be pre-approved in writing.
-                      </div>
-                      <div>
-                        <strong>3.3 Extensions:</strong> Any extension of the Internship requires mutual written agreement between Graphura and the Intern.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 4: Stipend */}
-                  <section id="stipend" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">4. Stipend (if applicable)</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>4.1 Stipend:</strong> If a stipend is offered, it shall be as specified in the Offer Letter, payable monthly via bank transfer to the Intern's designated account as per the bank details provided by the Intern to Graphura.
-                      </div>
-                      <div>
-                        <strong>4.2 Taxes:</strong> The Intern is responsible for all taxes applicable to the stipend, and Graphura may deduct taxes as required by law.
-                      </div>
-                      <div>
-                        <strong>4.3 No Additional Compensation:</strong> The Intern shall not be entitled to overtime pay, bonuses, or other compensation beyond the stipulated stipend (if any).
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 5: Intellectual Property */}
-                  <section id="ip" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">5. Intellectual Property</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <strong>5.1 Ownership of Work Product:</strong> All Work Product created by the Intern during the Internship, whether individually or collaboratively, shall be the sole and exclusive property of Graphura. The Intern hereby assigns all rights, title, and interest in the Work Product, including copyrights, trademarks, and other intellectual property rights, to Graphura.
-                      </div>
-                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <strong>5.2 Protection of Graphura's Ideas:</strong> All Ideas developed or presented by Graphura, or by the Intern in connection with the Internship, remain the exclusive property of Graphura. The Intern shall not use, reproduce, modify, disclose, or exploit such Ideas without Graphura's prior written consent. Unauthorized use of Graphura's Ideas constitutes a material breach of these Terms, entitling Graphura to seek injunctive relief, damages, and other legal remedies.
-                      </div>
-                      <div>
-                        <strong>5.3 Pre-Existing Materials:</strong> If the Intern incorporates any pre-existing materials into the Work Product, the Intern grants Graphura a perpetual, royalty-free, worldwide license to use such materials for Graphura's business purposes. The Intern warrants that such materials do not infringe third-party rights.
-                      </div>
-                      <div>
-                        <strong>5.4 Portfolio Use:</strong> Graphura may include the Intern's Work Product in its portfolio or marketing materials, subject to confidentiality obligations. The Intern may not use or display Work Product or Graphura's Ideas in their portfolio without Graphura's prior written consent.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 6: Confidentiality */}
-                  <section id="confidentiality" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">6. Confidentiality</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>6.1 Obligation:</strong> The Intern shall maintain the confidentiality of all Confidential Information and shall not disclose it to third parties or use it for any purpose other than performing internship tasks, without Graphura's prior written consent.
-                      </div>
-                      <div>
-                        <strong>6.2 Duration:</strong> This obligation shall survive the termination of the Internship for a period of 3 years.
-                      </div>
-                      <div>
-                        <strong>6.3 Exceptions:</strong> Confidential Information does not include information that is publicly available through no fault of the Intern, independently developed, or lawfully received from a third party without restriction.
-                      </div>
-                      <div>
-                        <strong>6.4 Return of Materials:</strong> Upon termination or at Graphura's request, the Intern shall return or destroy all Confidential Information and Graphura property, including documents, devices, and digital files.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 7: Conduct and Compliance */}
-                  <section id="conduct" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">7. Conduct and Compliance</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>7.1 Professional Conduct:</strong> The Intern shall act professionally, refrain from discriminatory or harassing behavior, and comply with Graphura's code of conduct and workplace policies.
-                      </div>
-                      <div>
-                        <strong>7.2 Compliance with Laws:</strong> The Intern shall comply with all applicable laws, including those related to intellectual property, data protection, and workplace safety.
-                      </div>
-                      <div>
-                        <strong>7.3 No Solicitation:</strong> During the Internship and for 1 year after termination, the Intern shall not solicit Graphura's clients, employees, or other interns for business or employment opportunities without Graphura's written consent.
-                      </div>
-                      <div>
-                        <strong>7.4 Data Protection:</strong> The Intern shall handle any personal data accessed during the Internship in accordance with Graphura's data protection policies and applicable laws, including the Information Technology Act, 2000, and the Digital Personal Data Protection Act, 2023.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 8: Termination */}
-                  <section id="termination" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">8. Termination</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>8.1 Termination by Graphura:</strong> Graphura may terminate the Internship immediately, with or without notice, for reasons including but not limited to:
-                        <ul className="list-disc list-inside ml-6 mt-2">
-                          <li>Material breach of these Terms, including unauthorized use of Ideas or breach of confidentiality.</li>
-                          <li>Unsatisfactory performance, unprofessional conduct, or failure to follow instructions.</li>
-                          <li>Violation of Graphura's policies or applicable laws.</li>
-                          <li>Graphura's operational needs, such as project cancellation or resource constraints.</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <strong>8.2 Termination by Intern:</strong> The Intern may terminate the Internship by providing 30 days' written notice to Graphura, unless otherwise specified in the Offer Letter.
-                      </div>
-                      <div>
-                        <strong>8.3 Post-Termination Obligations:</strong> Upon termination, the Intern shall:
-                        <ul className="list-disc list-inside ml-6 mt-2">
-                          <li>Return all Graphura property and Confidential Information.</li>
-                          <li>Cease using Graphura's resources, Ideas, or Work Product.</li>
-                          <li>Comply with ongoing confidentiality and non-solicitation obligations.</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <strong>8.4 No Compensation for Termination:</strong> The Intern shall not be entitled to compensation or damages for termination, except for any earned but unpaid stipend up to the termination date (if applicable).
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 9: Warranties and Representations */}
-                  <section id="warranties" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">9. Warranties and Representations</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>9.1 Intern's Warranties:</strong> The Intern warrants that:
-                        <ul className="list-disc list-inside ml-6 mt-2">
-                          <li>They have the legal capacity to enter into these Terms.</li>
-                          <li>All information provided to Graphura (e.g., educational qualifications) is accurate.</li>
-                          <li>Their participation in the Internship does not violate any agreement with a third party.</li>
-                          <li>Any materials provided by the Intern do not infringe third-party rights or violate applicable laws.</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <strong>9.2 Disclaimer:</strong> Graphura provides the Internship on an "as-is" basis and does not guarantee specific outcomes, such as future employment, skill certification, or project completion.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 10: Limitation of Liability */}
-                  <section id="liability" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">10. Limitation of Liability</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>10.1 Cap on Liability:</strong> To the fullest extent permitted by law, Graphura's liability for any claim arising from or related to the Internship, whether in contract, tort, or otherwise, shall be limited to the total stipend paid to the Intern (if any).
-                      </div>
-                      <div>
-                        <strong>10.2 Exclusion of Damages:</strong> Graphura shall not be liable for any indirect, consequential, incidental, special, or punitive damages, including but not limited to loss of opportunities, reputation, or data, even if advised of their possibility.
-                      </div>
-                      <div>
-                        <strong>10.3 Third-Party Actions:</strong> Graphura shall not be liable for any claims arising from the Intern's actions, including but not limited to intellectual property infringement or misuse of client data.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 11: Indemnification */}
-                  <section id="indemnification" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">11. Indemnification</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>11.1 Intern Indemnity:</strong> The Intern shall indemnify, defend, and hold harmless Graphura, its officers, directors, employees, and agents from any claims, damages, liabilities, costs, or expenses (including reasonable legal fees) arising from:
-                        <ul className="list-disc list-inside ml-6 mt-2">
-                          <li>The Intern's breach of these Terms.</li>
-                          <li>The Intern's negligence, willful misconduct, or violation of laws.</li>
-                          <li>Any materials provided by the Intern that infringe third-party rights or contain unlawful content.</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <strong>11.2 Procedure:</strong> Graphura shall promptly notify the Intern of any claim and allow the Intern to control the defense, provided Graphura may participate at its own expense.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 12: Force Majeure */}
-                  <section id="force-majeure" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">12. Force Majeure</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>12.1 Excused Performance:</strong> Graphura shall not be liable for delays or failure to provide the Internship due to events beyond its reasonable control, including but not limited to natural disasters, government actions, internet outages, or third-party platform failures.
-                      </div>
-                      <div>
-                        <strong>12.2 Termination for Prolonged Force Majeure:</strong> If a force majeure event continues for more than 30 days, either party may terminate the Internship with written notice, without liability.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 13: Governing Law and Dispute Resolution */}
-                  <section id="governing-law" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">13. Governing Law and Dispute Resolution</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>13.1 Governing Law:</strong> These Terms shall be governed by and construed in accordance with the laws of India.
-                      </div>
-                      <div>
-                        <strong>13.2 Dispute Resolution:</strong> Any dispute arising from or in connection with these Terms shall be resolved through good-faith negotiations within 30 days. If unresolved, disputes shall be submitted to arbitration in Haryana, India, under the Arbitration and Conciliation Act, 1996. The arbitration shall be conducted by a single arbitrator appointed by mutual agreement or, failing agreement, by the High Court. The arbitrator's decision shall be final and binding. Each party shall bear its own arbitration costs, and Graphura's liability shall be limited to the stipend paid to the Intern (if any). This clause does not prevent Graphura from seeking injunctive relief for equitable remedies.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 14: Miscellaneous */}
-                  <section id="miscellaneous" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">14. Miscellaneous</h2>
-                    <div className="space-y-4 text-gray-700">
-                      <div>
-                        <strong>14.1 Entire Agreement:</strong> These Terms, together with the Offer Letter, constitute the entire agreement between Graphura and the Intern, superseding any prior agreements or understandings.
-                      </div>
-                      <div>
-                        <strong>14.2 Amendments:</strong> Graphura may amend these Terms with 15 days' written notice to the Intern. Continued participation in the Internship constitutes acceptance of the amended Terms.
-                      </div>
-                      <div>
-                        <strong>14.3 Severability:</strong> If any provision of these Terms is found invalid or unenforceable, the remaining provisions shall remain in effect.
-                      </div>
-                      <div>
-                        <strong>14.4 Assignment:</strong> The Intern may not assign their rights or obligations under these Terms without Graphura's prior written consent. Graphura may assign its rights with notice to the Intern.
-                      </div>
-                      <div>
-                        <strong>14.5 Notices:</strong> All notices shall be in writing and sent via email to Official@Graphura.in for Graphura and [Insert Intern's Email] for the Intern, or by registered post to the addresses provided. Notices are deemed received 24 hours after email transmission or 3 days after posting.
-                      </div>
-                      <div>
-                        <strong>14.6 No Waiver:</strong> No waiver of any breach of these Terms shall constitute a waiver of any subsequent breach.
-                      </div>
-                      <div>
-                        <strong>14.7 Survival:</strong> Sections 5 (Intellectual Property), 6 (Confidentiality), 7.3 (No Solicitation), 10 (Limitation of Liability), 11 (Indemnification), and 13 (Governing Law and Dispute Resolution) shall survive termination of the Internship.
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Section 15: Acknowledgment */}
-                  <section id="acknowledgment" className="scroll-mt-24 mb-12">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">15. Acknowledgment</h2>
-                    <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
-                      <p className="text-gray-700 mb-4">
-                        By signing below, the Intern acknowledges that they have read, understood, and agree to be bound by these Rules, Code of Conduct, Terms and Conditions.
-                      </p>
-                      <div className="border-t border-green-200 pt-4 mt-4">
-                        <p className="text-sm text-gray-600">
-                          <strong>Intern Signature:</strong> _________________________
-                        </p>
-                        <p className="text-sm text-gray-600 mt-2">
-                          <strong>Date:</strong> _________________________
-                        </p>
-                      </div>
-                    </div>
-                  </section>
-
-                  {/* Important Notice */}
-                  <div className="bg-purple-50 border border-purple-200 rounded-xl p-6 mt-8">
-                    <h3 className="font-bold text-purple-900 mb-2">Important Notice</h3>
-                    <p className="text-purple-800 text-sm">
-                      These terms are legally binding. Please read them carefully before accepting any internship offer. 
-                      If you have any questions, contact us at <strong>Official@Graphura.in</strong>
+            <div className="flex-1 animate-fade-up delay-200">
+              <div className="bg-white rounded-3xl shadow-xl shadow-gray-100 border border-gray-100 p-8 md:p-12 relative overflow-hidden">
+                
+                <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-[#50B4C6]">
+                  
+                  {/* 1. Acceptance */}
+                  <section id="acceptance" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">1</span>
+                      Acceptance of Terms
+                    </h2>
+                    <p className="text-gray-700">
+                      By accessing, browsing, registering, or using Athenura’s website, services, programs, platforms, or communications, you acknowledge that you have read, understood, and agree to be legally bound by these Terms & Conditions. If you do not agree to any part of these Terms, you must immediately discontinue use of Athenura’s services.
                     </p>
-                  </div>
+                  </section>
+
+                  {/* 2. Eligibility */}
+                  <section id="eligibility" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">2</span>
+                      Eligibility
+                    </h2>
+                    <p className="text-gray-700">
+                      You must be legally capable of entering into a binding agreement to use Athenura’s services. Internship opportunities are open to students, graduates, or individuals who meet the eligibility criteria defined by Athenura. Submission of an application does not guarantee selection or participation.
+                    </p>
+                  </section>
+
+                  {/* 3. Use of Website */}
+                  <section id="use-of-service" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">3</span>
+                      Use of Website and Services
+                    </h2>
+                    <ul className="list-none space-y-3">
+                      {[
+                        "Use the website, platforms, and services only for lawful and legitimate purposes.",
+                        "Do not interfere with, disrupt, damage, or attempt unauthorized access to systems, servers, or data.",
+                        "Do not submit false, misleading, inaccurate, or fraudulent information.",
+                        "Do not misuse content, communication channels, or company resources."
+                      ].map((item, idx) => (
+                        <li key={idx} className="flex items-start text-gray-700 bg-gray-50 p-3 rounded-lg">
+                          <span className="text-[#50B4C6] font-bold mr-3">{idx + 1}.</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+
+                  {/* 4. User Responsibilities */}
+                  <section id="responsibilities" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">4</span>
+                      User Responsibilities
+                    </h2>
+                    <p className="text-gray-700">
+                      You are responsible for maintaining the accuracy of information provided to Athenura and for safeguarding any login credentials or communication details. Athenura shall not be responsible for losses resulting from inaccurate information, misuse, or unauthorized access caused by user negligence.
+                    </p>
+                  </section>
+
+                  {/* 5. Internship Programs */}
+                  <section id="internship-programs" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">5</span>
+                      Internship Programs and Services
+                    </h2>
+                    <p className="text-gray-700">
+                      Athenura offers internship programs for educational and skill-development purposes only. Participation is subject to selection criteria, availability, and compliance with company policies. Internship programs do not constitute employment and do not guarantee future job placement or compensation unless explicitly stated in writing.
+                    </p>
+                  </section>
+
+                  {/* 6. Offer Letter */}
+                  <section id="offer-letter" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">6</span>
+                      Internship Offer Letter
+                    </h2>
+                    <p className="text-gray-700">
+                      An official Internship Offer Letter will be issued only to selected candidates after successful application review and confirmation. The offer letter outlines internship duration, role, responsibilities, and applicable terms. Athenura reserves the right to withdraw or modify an internship offer at any stage in case of misinformation, policy violation, or operational requirements.
+                    </p>
+                  </section>
+
+                  {/* 7. Roles */}
+                  <section id="roles" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">7</span>
+                      Roles, Conduct, and Performance
+                    </h2>
+                    <p className="text-gray-700">
+                      Interns are expected to perform assigned tasks responsibly, meet deadlines, follow instructions, and maintain professional conduct. Any form of misconduct, non-compliance, absenteeism, unethical behavior, or misuse of company resources may result in termination of the internship without prior notice.
+                    </p>
+                  </section>
+
+                  {/* 8. IP */}
+                  <section id="ip" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">8</span>
+                      Intellectual Property Rights
+                    </h2>
+                    <div className="bg-red-50/50 p-4 rounded-xl border border-red-100">
+                      <p className="text-gray-700">
+                        All content, software, documentation, designs, source code, training materials, and work products created or accessed during internships or services remain the exclusive intellectual property of Athenura. Users and interns may not copy, distribute, publish, or reuse such materials without prior written authorization.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* 9. Confidentiality */}
+                  <section id="confidentiality" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">9</span>
+                      Confidentiality
+                    </h2>
+                    <p className="text-gray-700">
+                      All non-public, proprietary, or sensitive information disclosed during programs, internships, or communications must be kept strictly confidential. This obligation continues even after completion or termination of services or internships.
+                    </p>
+                  </section>
+
+                  {/* 10. Certificate */}
+                  <section id="certificate" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">10</span>
+                      Internship Certificate
+                    </h2>
+                    <p className="text-gray-700">
+                      An Internship Completion Certificate is issued only upon successful completion of the internship duration, satisfactory performance, compliance with all policies, and submission of required work or evaluations. Athenura reserves the right to withhold or revoke certificates in cases of misconduct, incomplete participation, or policy violations.
+                    </p>
+                  </section>
+
+                  {/* 11. Outcomes */}
+                  <section id="outcomes" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">11</span>
+                      No Guarantee of Outcomes
+                    </h2>
+                    <p className="text-gray-700">
+                      Athenura does not guarantee employment, job placement, stipend, salary, or financial benefits as a result of participation in any internship or service unless explicitly confirmed in writing.
+                    </p>
+                  </section>
+
+                  {/* 12. Liability */}
+                  <section id="liability" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">12</span>
+                      Limitation of Liability
+                    </h2>
+                    <p className="text-gray-700">
+                      To the maximum extent permitted by law, Athenura shall not be liable for any direct, indirect, incidental, consequential, or special damages arising from the use or inability to use its website, services, programs, or internship offerings.
+                    </p>
+                  </section>
+
+                  {/* 13. Indemnification */}
+                  <section id="indemnification" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">13</span>
+                      Indemnification
+                    </h2>
+                    <p className="text-gray-700">
+                      You agree to indemnify and hold harmless Athenura, its directors, employees, mentors, and affiliates from any claims, damages, losses, or expenses arising from your violation of these Terms or misuse of services.
+                    </p>
+                  </section>
+
+                  {/* 14. Termination */}
+                  <section id="termination" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">14</span>
+                      Termination of Access or Internship
+                    </h2>
+                    <p className="text-gray-700">
+                      Athenura reserves the right to suspend or terminate access to services or terminate an internship at any time without prior notice in cases of policy violation, misconduct, false information, or security risks.
+                    </p>
+                  </section>
+
+                  {/* 15. Third-Party Links */}
+                  <section id="links" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">15</span>
+                      Third-Party Links
+                    </h2>
+                    <p className="text-gray-700">
+                      The website may contain links to third-party platforms or resources. Athenura does not control and is not responsible for the content, availability, or practices of such external sites.
+                    </p>
+                  </section>
+
+                  {/* 16. Law */}
+                  <section id="law" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">16</span>
+                      Governing Law and Jurisdiction
+                    </h2>
+                    <p className="text-gray-700">
+                      These Terms & Conditions shall be governed by and interpreted in accordance with the laws of India. Any disputes shall fall under the exclusive jurisdiction of the courts of India.
+                    </p>
+                  </section>
+
+                  {/* 17. Changes */}
+                  <section id="changes" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">17</span>
+                      Changes to Terms
+                    </h2>
+                    <p className="text-gray-700">
+                      Athenura reserves the right to update, amend, or modify these Terms & Conditions at any time. Continued use of the website or participation in services or internships constitutes acceptance of the revised Terms.
+                    </p>
+                  </section>
+
+                  {/* 18. Contact */}
+                  <section id="contact" className="scroll-mt-32 mb-10">
+                    <h2 className="text-2xl font-bold mb-4 pb-2 border-b-2 border-[#50B4C6]/20 flex items-center">
+                      <span className="bg-[#50B4C6] text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm mr-3">18</span>
+                      Contact Information
+                    </h2>
+                    <div className="bg-[#50B4C6]/10 p-6 rounded-xl border border-[#50B4C6]/30">
+                      <p className="text-gray-700 mb-2">
+                        For any questions, clarifications, or concerns regarding these Terms & Conditions, please contact us at:
+                      </p>
+                      <a 
+                        href="mailto:info.athenura@gmail.com" 
+                        className="text-xl font-bold text-[#50B4C6] hover:underline"
+                      >
+                        info.athenura@gmail.com
+                      </a>
+                    </div>
+                  </section>
+
                 </div>
               </div>
             </div>
@@ -416,32 +339,20 @@ export default function TermsAndConditions() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-6xl mx-auto px-6">
+      <footer className="bg-slate-900 text-white py-12 border-t-4 border-[#50B4C6]">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-6 md:mb-0">
-              <img
-                src={logo}
-                alt="Graphura Logo"
-                className="w-28 h-auto object-contain"
-              />
+               <img src={logo} alt="Athenura Logo" className="w-28 h-auto object-contain brightness-0 invert" />
             </div>
-            <div className="flex space-x-6">
-              <Link to="/signup" className="text-gray-400 hover:text-white transition-colors">
-                Sign In
-              </Link>
-              <Link to="/register" className="text-gray-400 hover:text-white transition-colors">
-                Register
-              </Link>
-              <Link to="/feedback" className="text-gray-400 hover:text-white transition-colors">
-                Feedback
-              </Link>
+            <div className="flex space-x-6 text-sm font-medium">
+              <Link to="/signup" className="text-gray-400 hover:text-[#50B4C6] transition-colors">Sign In</Link>
+              <Link to="/register" className="text-gray-400 hover:text-[#50B4C6] transition-colors">Register</Link>
+              <Link to="/feedback" className="text-gray-400 hover:text-[#50B4C6] transition-colors">Feedback</Link>
             </div>
           </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p className="text-gray-400">
-              © {new Date().getFullYear()} Graphura India Private Limited. All rights reserved.
-            </p>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
+            <p>© {new Date().getFullYear()} Athenura India Private Limited. All rights reserved.</p>
           </div>
         </div>
       </footer>

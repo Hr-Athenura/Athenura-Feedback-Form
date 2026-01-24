@@ -1,5 +1,23 @@
 import React, { useState } from 'react';
-import logo from '../../public/Graphura.jpg';
+import logo from '../../public/AthenuraCircle.png';
+import {
+    User,
+    Briefcase,
+    Users,
+    Share2,
+    CheckCircle,
+    ArrowLeft,
+    ArrowRight,
+    Send,
+    Lightbulb,
+    Calendar,
+    IdCard,
+    Building2,
+    UserCheck,
+    Instagram,
+    Linkedin,
+    AlertCircle // Added icon for complaint
+} from 'lucide-react';
 
 const FeedbackForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -21,6 +39,9 @@ const FeedbackForm = () => {
         Q2_incharge: { answer: '' },
         Q3_incharge: { answer: '' },
 
+        // Complaint moved to Step 4
+        complaint: { answer: '', isOptional: true },
+        
         Q1_social: { answer: '' },
         Q2_social: { answer: '' },
     });
@@ -31,16 +52,17 @@ const FeedbackForm = () => {
     const [showSuggestions, setShowSuggestions] = useState({});
     const [skillSearch, setSkillSearch] = useState('');
     const [showSkillSuggestions, setShowSkillSuggestions] = useState(false);
+    const [isAnonymousComplaint, setIsAnonymousComplaint] = useState(false);
 
     const steps = [
-        { number: 1, title: 'Intern Details', icon: '👤' },
-        { number: 2, title: 'Intern Experience', icon: '💼' },
-        { number: 3, title: 'Mentor Feedback', icon: '👨‍🏫' },
-        { number: 4, title: 'Social Media', icon: '📱' },
-        { number: 5, title: 'Review & Submit', icon: '✅' }
+        { number: 1, title: 'Intern Details', icon: User },
+        { number: 2, title: 'Intern Experience', icon: Briefcase },
+        { number: 3, title: 'Mentor Feedback', icon: Users },
+        { number: 4, title: 'Issues & Social', icon: AlertCircle }, // Changed icon and title
+        { number: 5, title: 'Review & Submit', icon: CheckCircle }
     ];
 
-    // Enhanced skills list with categories
+
     const predefinedSkills = [
         // 🧠 Technical Skills
         'React.js', 'Next.js', 'Vue.js', 'Angular', 'Node.js', 'Express.js',
@@ -97,7 +119,7 @@ const FeedbackForm = () => {
         'AR/VR', 'Prompt Engineering', 'Chatbot Development', 'RPA (Automation)'
     ];
 
-    // AI Suggestions for each question
+    // Add complaint suggestion to AI suggestions
     const questionSuggestions = {
         Q1_internship: "💡 Mention specific tasks like 'Developed React components', 'Managed database queries', or 'Created UI/UX designs'. Include technologies used.",
         Q2_internship: "🌟 Describe what made it meaningful - learning, impact, teamwork, or challenge.",
@@ -105,7 +127,8 @@ const FeedbackForm = () => {
         Q4_internship: "🤝 Mention collaboration, support received, and communication style.",
         Q5_internship: "❤️ Highlight training, company culture, projects, or team support.",
         Q6_internship: "💭 Be constructive! Suggest onboarding, training, or project improvements.",
-        Q3_incharge: "🙏 Share specific help received or qualities you appreciated."
+        Q3_incharge: "🙏 Share specific help received or qualities you appreciated.",
+        complaint: "⚠️ If you have any concerns, please describe them clearly and specifically. Include dates, people involved, and any evidence if available. This is optional and will be handled confidentially."
     };
 
     const handleInputChange = (field, value) => {
@@ -164,6 +187,7 @@ const FeedbackForm = () => {
                 break;
 
             case 4:
+                // Complaint is optional, so no validation needed
                 if (!formData.Q1_social.answer) newErrors.Q1_social = 'This field is required';
                 if (!formData.Q2_social.answer) newErrors.Q2_social = 'This field is required';
                 break;
@@ -239,6 +263,12 @@ const FeedbackForm = () => {
                     Q2_incharge: { answer: formData.Q2_incharge.answer },
                     Q3_incharge: { answer: formData.Q3_incharge.answer },
 
+                    complaint: { 
+                        answer: formData.complaint.answer,
+                        isOptional: true,
+                        submittedAnonymously: isAnonymousComplaint
+                    },
+                    
                     Q1_social: { answer: formData.Q1_social.answer },
                     Q2_social: { answer: formData.Q2_social.answer },
                 };
@@ -265,9 +295,11 @@ const FeedbackForm = () => {
                     Q1_incharge: { answer: '' },
                     Q2_incharge: { answer: '' },
                     Q3_incharge: { answer: '' },
+                    complaint: { answer: '', isOptional: true },
                     Q1_social: { answer: '' },
                     Q2_social: { answer: '' },
                 });
+                setIsAnonymousComplaint(false);
                 setCurrentStep(1);
 
             } catch (error) {
@@ -324,28 +356,46 @@ const FeedbackForm = () => {
     const progressPercentage = ((currentStep - 1) / (steps.length - 1)) * 100;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 py-4 px-3 sm:py-8 sm:px-4">
+        <div className="min-h-screen bg-gradient-to-br from-teal-50 via-teal-100 to-teal-200 py-4 px-3 sm:py-8 sm:px-4">
             <div className="max-w-7xl mx-auto bg-white rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl overflow-hidden border border-white/20">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 p-4 sm:p-6 md:p-8 text-white relative overflow-hidden">
-                    <div className="absolute inset-0 bg-black/10"></div>
+                <div className="bg-gradient-to-br from-[#50B4C6] via-cyan-600 to-teal-700 p-8 sm:p-10 text-white relative overflow-hidden shadow-lg">
+
+                    {/* Decorative Background Elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 animate-pulse"></div>
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-900/20 rounded-full blur-2xl -ml-10 -mb-10"></div>
+
                     <div className="relative z-10 text-center">
-                        <img 
-                            src={logo} 
-                            alt="Graphura" 
-                            className="mx-auto mb-3 sm:mb-4 h-12 sm:h-16 md:h-20 w-12 sm:w-16 md:w-20 rounded-full object-cover border-2 border-white/30" 
-                        />
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3 font-['Inter']">
-                            Graphura Internship Feedback
+
+                        {/* Logo Container with Glass Effect & Hover Animation */}
+                        <div className="mx-auto mb-6 transform transition-transform duration-500 hover:scale-105">
+                            <div className="inline-block p-1.5 rounded-full border-2 border-white/30 bg-white/10 backdrop-blur-md shadow-2xl">
+                                <img
+                                    src={logo}
+                                    alt="Athenura"
+                                    className="h-16 w-16 sm:h-20 sm:w-20 rounded-full object-cover"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Title with Better Typography */}
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 tracking-tight font-sans drop-shadow-sm">
+                            Athenura Internship Feedback
                         </h1>
-                        <p className="text-blue-100 text-sm sm:text-base md:text-lg font-['Inter']">
-                            Share your valuable journey and help us grow together
+
+                        {/* Subtitle */}
+                        <p className="text-cyan-50 text-base sm:text-lg font-medium opacity-90 max-w-xl mx-auto leading-relaxed">
+                            Share your valuable journey and help us grow together.
                         </p>
-                        <div className="flex justify-center mt-3 sm:mt-4 space-x-1 sm:space-x-2">
+
+                        {/* Modern Elongated Step Indicators */}
+                        <div className="flex justify-center items-center gap-2 mt-8">
                             {steps.map((step) => (
                                 <div
                                     key={step.number}
-                                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${currentStep >= step.number ? 'bg-white' : 'bg-white/30'
+                                    className={`h-1.5 rounded-full transition-all duration-500 ease-out ${currentStep >= step.number
+                                        ? 'w-8 bg-white shadow-[0_0_10px_rgba(255,255,255,0.6)]'
+                                        : 'w-1.5 bg-white/30'
                                         }`}
                                 />
                             ))}
@@ -370,34 +420,38 @@ const FeedbackForm = () => {
 
                     {/* Step Indicators */}
                     <div className="flex justify-between items-center mb-6 sm:mb-8 overflow-x-auto py-3 sm:py-4 -mx-2 px-2">
-                        {steps.map((step, index) => (
-                            <div key={step.number} className="flex items-center flex-shrink-0">
-                                <div
-                                    className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl md:rounded-2xl flex items-center justify-center font-semibold transition-all duration-300 shadow-md ${currentStep >= step.number
-                                            ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white scale-105'
-                                            : 'bg-gray-100 text-gray-400 border border-gray-200'
-                                        }`}
-                                >
-                                    <span className="text-sm sm:text-base md:text-lg">{step.icon}</span>
-                                </div>
-                                <span
-                                    className={`ml-2 font-medium hidden sm:block transition-all duration-300 font-['Inter'] ${currentStep >= step.number
-                                            ? 'text-gray-800 font-semibold text-xs md:text-sm'
-                                            : 'text-gray-500 text-xs md:text-sm'
-                                        }`}
-                                >
-                                    {step.title}
-                                </span>
-                                {index < steps.length - 1 && (
+                        {steps.map((step, index) => {
+                            const Icon = step.icon;
+
+                            return (
+                                <div key={step.number} className="flex items-center flex-shrink-0">
                                     <div
-                                        className={`w-4 sm:w-6 md:w-8 h-1 mx-1 sm:mx-2 md:mx-4 transition-all duration-300 ${currentStep > step.number
-                                                ? 'bg-gradient-to-r from-blue-500 to-purple-600'
-                                                : 'bg-gray-200'
+                                        className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md transition-all ${currentStep >= step.number
+                                                ? 'bg-gradient-to-br from-teal-500 to-teal-600 text-white scale-105'
+                                                : 'bg-gray-100 text-gray-400 border border-gray-200'
                                             }`}
-                                    />
-                                )}
-                            </div>
-                        ))}
+                                    >
+                                        <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                                    </div>
+
+                                    <span
+                                        className={`ml-2 hidden sm:block font-medium ${currentStep >= step.number ? 'text-gray-800' : 'text-gray-500'
+                                            }`}
+                                    >
+                                        {step.title}
+                                    </span>
+
+                                    {index < steps.length - 1 && (
+                                        <div
+                                            className={`w-6 h-1 mx-2 ${currentStep > step.number
+                                                    ? 'bg-teal-500'
+                                                    : 'bg-gray-200'
+                                                }`}
+                                        />
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -406,8 +460,8 @@ const FeedbackForm = () => {
                     {/* Step 1: Intern Details */}
                     {currentStep === 1 && (
                         <div className="space-y-6 sm:space-y-8">
-                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-500 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm">
-                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">👤 Intern Details</h2>
+                            <div className="bg-gradient-to-r from-teal-50 to-teal-100 border-teal-500 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm">
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">Intern Details</h2>
                                 <p className="text-gray-600 text-sm sm:text-base md:text-lg font-['Inter']">Let's start with your basic information</p>
                             </div>
 
@@ -497,7 +551,7 @@ const FeedbackForm = () => {
                     {currentStep === 2 && (
                         <div className="space-y-6 sm:space-y-8">
                             <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-500 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm">
-                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">💼 Internship Experience</h2>
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">Internship Experience</h2>
                                 <p className="text-gray-600 text-sm sm:text-base md:text-lg font-['Inter']">Share your journey and learnings with us</p>
                             </div>
 
@@ -538,7 +592,7 @@ const FeedbackForm = () => {
                                                 <button
                                                     type="button"
                                                     onClick={() => toggleSuggestion(key)}
-                                                    className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm font-medium bg-blue-50 px-2 sm:px-3 py-1 rounded-full transition-colors flex-shrink-0 ml-2"
+                                                    className="text-teal-600 hover:text-teal-800 bg-teal-50 text-xs sm:text-sm font-medium bg-blue-50 px-2 sm:px-3 py-1 rounded-full transition-colors flex-shrink-0 ml-2"
                                                 >
                                                     {showSuggestions[key] ? 'Hide' : '💡'}
                                                 </button>
@@ -594,7 +648,7 @@ const FeedbackForm = () => {
                                                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-sm sm:text-base"
                                                     onFocus={() => setShowSkillSuggestions(true)}
                                                 />
-                                                
+
                                                 {/* Skill Suggestions Dropdown */}
                                                 {showSkillSuggestions && skillSearch && (
                                                     <div className="absolute z-10 w-full mt-1 bg-white border-2 border-gray-200 rounded-lg sm:rounded-xl shadow-lg max-h-60 overflow-y-auto">
@@ -620,16 +674,15 @@ const FeedbackForm = () => {
                                                     </div>
                                                 )}
                                             </div>
-                                            
+
                                             <button
                                                 type="button"
                                                 onClick={handleAddCustomSkill}
                                                 disabled={!skillSearch.trim()}
-                                                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition-all duration-200 text-sm sm:text-base whitespace-nowrap ${
-                                                    skillSearch.trim() 
-                                                        ? 'bg-green-500 text-white hover:bg-green-600 shadow-md' 
-                                                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                                }`}
+                                                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition-all duration-200 text-sm sm:text-base whitespace-nowrap ${skillSearch.trim()
+                                                    ? 'bg-green-500 text-white hover:bg-green-600 shadow-md'
+                                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                                    }`}
                                             >
                                                 Add Custom Skill
                                             </button>
@@ -672,11 +725,10 @@ const FeedbackForm = () => {
                                                         key={skill}
                                                         type="button"
                                                         onClick={() => toggleSkill(skill)}
-                                                        className={`p-2 sm:p-3 border-2 rounded-lg sm:rounded-xl text-center transition-all duration-200 text-xs sm:text-sm font-['Inter'] ${
-                                                            formData.Q3_internship.answer.includes(skill)
-                                                                ? 'bg-blue-100 border-blue-500 text-blue-700 shadow-md scale-105'
-                                                                : 'border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm'
-                                                        }`}
+                                                        className={`p-2 sm:p-3 border-2 rounded-lg sm:rounded-xl text-center transition-all duration-200 text-xs sm:text-sm font-['Inter'] ${formData.Q3_internship.answer.includes(skill)
+                                                            ? 'bg-blue-100 border-blue-500 text-blue-700 shadow-md scale-105'
+                                                            : 'border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm'
+                                                            }`}
                                                     >
                                                         {skill}
                                                     </button>
@@ -699,7 +751,7 @@ const FeedbackForm = () => {
                     {currentStep === 3 && (
                         <div className="space-y-6 sm:space-y-8">
                             <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-500 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm">
-                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">👨‍🏫 Mentor Feedback</h2>
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">Mentor Feedback</h2>
                                 <p className="text-gray-600 text-sm sm:text-base md:text-lg font-['Inter']">Help us improve our mentorship program</p>
                             </div>
 
@@ -794,12 +846,84 @@ const FeedbackForm = () => {
                         </div>
                     )}
 
-                    {/* Step 4: Social Media */}
+                    {/* Step 4: Complaint & Social Media */}
                     {currentStep === 4 && (
                         <div className="space-y-6 sm:space-y-8">
+                            <div className="bg-gradient-to-r from-red-50 to-pink-50 border-l-4 border-red-400 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm">
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">Issues & Social Media</h2>
+                                <p className="text-gray-600 text-sm sm:text-base md:text-lg font-['Inter']">Optional complaints and social media engagement</p>
+                            </div>
+
+                            {/* Complaint Section */}
+                            <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-100 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm mb-6 sm:mb-8">
+                                <div className="flex items-center mb-4">
+                                    <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-red-500 mr-2 sm:mr-3" />
+                                    <h3 className="text-lg sm:text-xl font-semibold text-red-700 font-['Inter']">
+                                        🚨 Optional: Report an Issue or Complaint
+                                    </h3>
+                                </div>
+                                
+                                <div className="mb-4 p-3 sm:p-4 bg-white rounded-lg border border-red-100">
+                                    <p className="text-gray-700 text-sm sm:text-base mb-3 font-['Inter']">
+                                        <strong>Note:</strong> This section is completely optional. If you faced any issues, concerns, 
+                                        or have complaints during your internship, please describe them here. All complaints will be 
+                                        handled confidentially.
+                                    </p>
+                                    <p className="text-gray-600 text-xs sm:text-sm font-['Inter']">
+                                        You can report about: Harassment, Unfair treatment, Payment issues, Work environment concerns, 
+                                        Discrimination, Safety issues, or any other grievances.
+                                    </p>
+                                </div>
+
+                                <div className="space-y-3 sm:space-y-4">
+                                    <div className="flex justify-between items-start">
+                                        <label className="block text-base sm:text-lg font-semibold text-gray-800 font-['Inter'] leading-tight">
+                                            Describe your complaint or concern (Optional)
+                                        </label>
+                                        {questionSuggestions.complaint && (
+                                            <button
+                                                type="button"
+                                                onClick={() => toggleSuggestion('complaint')}
+                                                className="text-red-600 hover:text-red-800 bg-red-50 text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 rounded-full transition-colors flex-shrink-0 ml-2"
+                                            >
+                                                {showSuggestions.complaint ? 'Hide' : '💡'}
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {showSuggestions.complaint && (
+                                        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 sm:p-4 rounded-lg animate-fadeIn">
+                                            <p className="text-yellow-800 text-xs sm:text-sm font-['Inter']">{questionSuggestions.complaint}</p>
+                                        </div>
+                                    )}
+
+                                    <textarea
+                                        value={formData.complaint.answer}
+                                        onChange={(e) => handleQuestionChange('complaint', e.target.value)}
+                                        rows={4}
+                                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200 text-sm sm:text-base"
+                                        placeholder="If you have any complaints or concerns, please describe them here. This is optional and confidential..."
+                                    />
+                                    
+                                    <div className="flex items-center text-gray-500 text-xs sm:text-sm mt-2">
+                                        <input
+                                            type="checkbox"
+                                            id="anonymousComplaint"
+                                            checked={isAnonymousComplaint}
+                                            onChange={(e) => setIsAnonymousComplaint(e.target.checked)}
+                                            className="w-4 h-4 mr-2"
+                                        />
+                                        <label htmlFor="anonymousComplaint" className="font-['Inter']">
+                                            I prefer to remain anonymous (your identity will be protected)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Social Media Section */}
                             <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-500 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-sm">
-                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">📱 Social Media</h2>
-                                <p className="text-gray-600 text-sm sm:text-base md:text-lg font-['Inter']">Stay connected with Graphura</p>
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3 font-['Inter']">Social Media</h2>
+                                <p className="text-gray-600 text-sm sm:text-base md:text-lg font-['Inter']">Stay connected with Athenura</p>
                             </div>
 
                             <div className="space-y-4 sm:space-y-6">
@@ -807,19 +931,19 @@ const FeedbackForm = () => {
                                     {
                                         key: 'Q1_social',
                                         platform: 'Instagram',
-                                        icon: '📷',
-                                        link: 'https://www.instagram.com/graphura.in/'
+                                        icon: <Instagram className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />,
+                                        link: 'https://www.instagram.com/Athenura.in/'
                                     },
                                     {
                                         key: 'Q2_social',
                                         platform: 'LinkedIn',
-                                        icon: '💼',
-                                        link: 'https://www.linkedin.com/company/graphura-india-private-limited/'
+                                        icon: <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />,
+                                        link: 'https://www.linkedin.com/company/Athenura'
                                     }
                                 ].map(({ key, platform, icon, link }) => (
                                     <div key={key} className="p-4 sm:p-6 border-2 border-blue-100 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 hover:shadow-lg transition-all duration-300">
                                         <label className="block text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4 font-['Inter']">
-                                            Are you following Graphura on {platform}?
+                                            Are you following Athenura on {platform}?
                                         </label>
                                         <div className="flex flex-col sm:flex-row sm:gap-6 gap-3 mb-3 sm:mb-4">
                                             <label className="flex items-center cursor-pointer">
@@ -851,7 +975,7 @@ const FeedbackForm = () => {
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors group text-sm sm:text-base"
                                         >
-                                            <span className="mr-2">{icon}</span>
+                                            {icon}
                                             Follow us on {platform}
                                             <span className="ml-1 sm:ml-2 group-hover:translate-x-1 transition-transform">→</span>
                                         </a>
@@ -877,7 +1001,7 @@ const FeedbackForm = () => {
                             <div className="space-y-4 sm:space-y-6 bg-gray-50 p-4 sm:p-6 rounded-xl sm:rounded-2xl border-2 border-gray-200">
                                 {[
                                     {
-                                        title: '👤 Intern Details', icon: '👤', fields: [
+                                        title: 'Intern Details', icon: User, fields: [
                                             { label: 'ID', value: formData.internUniqueId },
                                             { label: 'Name', value: formData.internName },
                                             { label: 'Department', value: formData.department },
@@ -886,7 +1010,7 @@ const FeedbackForm = () => {
                                         ]
                                     },
                                     {
-                                        title: '💼 Internship Experience', icon: '💼', fields: [
+                                        title: 'Internship Experience', icon: '💼', fields: [
                                             { label: 'Responsibilities', value: formData.Q1_internship.answer, fullWidth: true },
                                             { label: 'Meaningful Project', value: formData.Q2_internship.answer, fullWidth: true },
                                             { label: 'Skills Learned', value: formData.Q3_internship.answer.join(', ') },
@@ -896,20 +1020,33 @@ const FeedbackForm = () => {
                                         ]
                                     },
                                     {
-                                        title: '👨‍🏫 Mentor Feedback', icon: '👨‍🏫', fields: [
+                                        title: 'Mentor Feedback', icon: '👨‍🏫', fields: [
                                             { label: 'Supportiveness', value: formData.Q1_incharge.answer },
                                             { label: 'Guidance Frequency', value: formData.Q2_incharge.answer },
                                             { label: 'Appreciation Message', value: formData.Q3_incharge.answer, fullWidth: true }
                                         ]
                                     },
                                     {
-                                        title: '📱 Social Media', icon: '📱', fields: [
+                                        title: 'Complaint', icon: '🚨', fields: [
+                                            { 
+                                                label: 'Complaint/Issue', 
+                                                value: formData.complaint.answer || 'No complaint submitted', 
+                                                fullWidth: true 
+                                            },
+                                            { 
+                                                label: 'Submitted Anonymously', 
+                                                value: isAnonymousComplaint ? 'Yes' : 'No' 
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        title: 'Social Media', icon: '📱', fields: [
                                             { label: 'Instagram', value: formData.Q1_social.answer },
                                             { label: 'LinkedIn', value: formData.Q2_social.answer }
                                         ]
                                     }
                                 ].map((section, index) => (
-                                    <div key={index} className="bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-sm border border-gray-100">
+                                    <div key={index} className="bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-sm border border-gray-100 mb-4">
                                         <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center font-['Inter']">
                                             <span className="mr-2 text-xl sm:text-2xl">{section.icon}</span>
                                             {section.title}
@@ -927,6 +1064,7 @@ const FeedbackForm = () => {
                                     </div>
                                 ))}
 
+                                {/* Validation Warning */}
                                 {formData.Q6_internship.answer && formData.Q6_internship.answer === originalSuggestion && (
                                     <div className="bg-red-50 border-2 border-red-200 rounded-lg sm:rounded-xl p-3 sm:p-4 animate-pulse">
                                         <p className="text-red-700 font-medium flex items-center text-sm sm:text-base font-['Inter']">
@@ -946,8 +1084,8 @@ const FeedbackForm = () => {
                             onClick={handlePrevious}
                             disabled={currentStep === 1}
                             className={`px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 flex items-center text-sm sm:text-base ${currentStep === 1
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-gradient-to-r from-gray-500 to-gray-600 text-white hover:from-gray-600 hover:to-gray-700 shadow-lg hover:shadow-xl transform hover:-translate-x-1'
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-gray-500 to-gray-600 text-white hover:from-gray-600 hover:to-gray-700 shadow-lg hover:shadow-xl transform hover:-translate-x-1'
                                 }`}
                         >
                             <span className="mr-1 sm:mr-2">←</span> Previous
@@ -957,7 +1095,7 @@ const FeedbackForm = () => {
                             <button
                                 type="button"
                                 onClick={handleNext}
-                                className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl sm:rounded-2xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:translate-x-1 flex items-center text-sm sm:text-base"
+                                className="px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-xl sm:rounded-2xl font-semibold hover:from-teal-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:translate-x-1 flex items-center text-sm sm:text-base"
                             >
                                 Next <span className="ml-1 sm:ml-2">→</span>
                             </button>
@@ -966,8 +1104,8 @@ const FeedbackForm = () => {
                                 type="submit"
                                 disabled={isSubmitting || (formData.Q6_internship.answer && formData.Q6_internship.answer === originalSuggestion)}
                                 className={`px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center text-sm sm:text-base ${isSubmitting || (formData.Q6_internship.answer && formData.Q6_internship.answer === originalSuggestion)
-                                        ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                                        : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700'
+                                    ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                                    : 'bg-gradient-to-r from-teal-500 to-emerald-600 text-white hover:from-teal-600 hover:to-emerald-700'
                                     }`}
                             >
                                 {isSubmitting ? (
@@ -981,7 +1119,6 @@ const FeedbackForm = () => {
                                     </span>
                                 ) : (
                                     <>
-                                        <span className="mr-1 sm:mr-2">🚀</span> 
                                         <span className="hidden sm:inline">Submit Feedback</span>
                                         <span className="sm:hidden">Submit</span>
                                     </>

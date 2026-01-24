@@ -10,7 +10,7 @@ export const submitFeedback = async (req, res) => {
       department,
       seniorOrManager,
       joiningDate,
-      
+
       // Internship experience questions
       Q1_internship,
       Q2_internship,
@@ -18,12 +18,15 @@ export const submitFeedback = async (req, res) => {
       Q4_internship,
       Q5_internship,
       Q6_internship,
-      
+
       // Mentor feedback questions
       Q1_incharge,
       Q2_incharge,
       Q3_incharge,
-      
+
+      // 🚨 Complaint (NEW)
+      complaint,
+
       // Social media questions
       Q1_social,
       Q2_social
@@ -33,11 +36,12 @@ export const submitFeedback = async (req, res) => {
     if (!internUniqueId || !internName || !department || !seniorOrManager || !joiningDate) {
       return res.status(400).json({
         success: false,
-        message: 'Missing required fields: internUniqueId, internName, department, seniorOrManager, or joiningDate'
+        message:
+          'Missing required fields: internUniqueId, internName, department, seniorOrManager, or joiningDate'
       });
     }
 
-    // Check if feedback already exists for this intern ID
+    // Prevent duplicate submission
     const existingFeedback = await Feedback.findOne({ internUniqueId });
     if (existingFeedback) {
       return res.status(409).json({
@@ -46,7 +50,7 @@ export const submitFeedback = async (req, res) => {
       });
     }
 
-    // Create new feedback document
+    // Create feedback document
     const newFeedback = new Feedback({
       // Intern Details
       internUniqueId: internUniqueId.trim(),
@@ -56,70 +60,59 @@ export const submitFeedback = async (req, res) => {
       joiningDate: new Date(joiningDate),
 
       // Internship Experience
-      Q1_internship: {
-        answer: Q1_internship?.answer?.trim() || ''
-      },
-      Q2_internship: {
-        answer: Q2_internship?.answer?.trim() || ''
-      },
+      Q1_internship: { answer: Q1_internship?.answer?.trim() || '' },
+      Q2_internship: { answer: Q2_internship?.answer?.trim() || '' },
       Q3_internship: {
-        answer: Array.isArray(Q3_internship?.answer) ? Q3_internship.answer : []
+        answer: Array.isArray(Q3_internship?.answer)
+          ? Q3_internship.answer
+          : []
       },
-      Q4_internship: {
-        answer: Q4_internship?.answer?.trim() || ''
-      },
-      Q5_internship: {
-        answer: Q5_internship?.answer?.trim() || ''
-      },
-      Q6_internship: {
-        answer: Q6_internship?.answer?.trim() || ''
-      },
+      Q4_internship: { answer: Q4_internship?.answer?.trim() || '' },
+      Q5_internship: { answer: Q5_internship?.answer?.trim() || '' },
+      Q6_internship: { answer: Q6_internship?.answer?.trim() || '' },
 
       // Mentor Feedback
-      Q1_incharge: {
-        answer: Q1_incharge?.answer || ''
-      },
-      Q2_incharge: {
-        answer: Q2_incharge?.answer || ''
-      },
-      Q3_incharge: {
-        answer: Q3_incharge?.answer?.trim() || ''
+      Q1_incharge: { answer: Q1_incharge?.answer || '' },
+      Q2_incharge: { answer: Q2_incharge?.answer || '' },
+      Q3_incharge: { answer: Q3_incharge?.answer?.trim() || '' },
+
+      // 🚨 Complaint Section (Optional & Anonymous)
+      complaint: {
+        answer: complaint?.answer?.trim() || '',
+        isOptional: true,
+        submittedAnonymously: complaint?.submittedAnonymously || false
       },
 
       // Social Media
-      Q1_social: {
-        answer: Q1_social?.answer || ''
-      },
-      Q2_social: {
-        answer: Q2_social?.answer || ''
-      },
+      Q1_social: { answer: Q1_social?.answer || '' },
+      Q2_social: { answer: Q2_social?.answer || '' },
 
-      // Default values
+      // Metadata
       status: 'Pending',
       formSubmissionDate: new Date()
     });
 
-    // Save to database
+    // Save
     const savedFeedback = await newFeedback.save();
 
     // Success response
     res.status(201).json({
       success: true,
-      message: 'Feedback submitted successfully..',
+      message: 'Feedback submitted successfully.',
       data: {
         id: savedFeedback._id,
         internUniqueId: savedFeedback.internUniqueId,
         internName: savedFeedback.internName,
         department: savedFeedback.department,
         submissionDate: savedFeedback.formSubmissionDate,
-        status: savedFeedback.status
+        status: savedFeedback.status,
+        complaintSubmitted: Boolean(savedFeedback.complaint?.answer)
       }
     });
 
   } catch (error) {
     console.error('Feedback submission error:', error);
 
-    // Handle MongoDB validation errors
     if (error.name === 'ValidationError') {
       const validationErrors = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({
@@ -129,7 +122,6 @@ export const submitFeedback = async (req, res) => {
       });
     }
 
-    // Handle MongoDB duplicate key errors
     if (error.code === 11000) {
       return res.status(409).json({
         success: false,
@@ -137,25 +129,26 @@ export const submitFeedback = async (req, res) => {
       });
     }
 
-    // Handle other errors
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
+      error:
+        process.env.NODE_ENV === 'development'
+          ? error.message
+          : 'Something went wrong'
     });
   }
 };
 
 
+
 export const getFeedbacks = async (req, res) => {
   try {
-    // Get all feedbacks from database
     const feedbacks = await Feedback.find({})
-      .sort({ formSubmissionDate: -1 }) // Sort by latest first
-      .select('-__v') // Exclude version key
+      .sort({ formSubmissionDate: -1 })
+      .select('-__v')
       .lean();
 
-    // If no feedbacks found
     if (!feedbacks || feedbacks.length === 0) {
       return res.status(200).json({
         success: true,
@@ -165,12 +158,48 @@ export const getFeedbacks = async (req, res) => {
       });
     }
 
-    // Return success response with feedbacks
+    // 🔥 ADD complaintMetadata for frontend compatibility
+    const enrichedFeedbacks = feedbacks.map(feedback => {
+      const hasComplaint = Boolean(
+        feedback.complaint?.answer &&
+        feedback.complaint.answer.trim().length > 0
+      );
+
+      // 🧠 Basic priority detection (can be improved later)
+      let priority = "None";
+      if (hasComplaint) {
+        const text = feedback.complaint.answer.toLowerCase();
+        if (text.includes("harassment") || text.includes("threat")) {
+          priority = "Critical";
+        } else if (text.includes("payment") || text.includes("delay")) {
+          priority = "High";
+        } else if (text.includes("behavior") || text.includes("manager")) {
+          priority = "Medium";
+        } else {
+          priority = "Low";
+        }
+      }
+
+      return {
+        ...feedback,
+
+        // 🚨 Derived complaint metadata (NO DB CHANGE)
+        complaintMetadata: {
+          hasComplaint,
+          priority,
+          complaintCategory: hasComplaint ? "Intern Reported Issue" : "None",
+          complaintDate: hasComplaint
+            ? feedback.formSubmissionDate
+            : null
+        }
+      };
+    });
+
     res.status(200).json({
       success: true,
       message: "Feedbacks retrieved successfully",
-      data: feedbacks,
-      count: feedbacks.length
+      data: enrichedFeedbacks,
+      count: enrichedFeedbacks.length
     });
 
   } catch (error) {
@@ -182,6 +211,7 @@ export const getFeedbacks = async (req, res) => {
     });
   }
 };
+
 
 
 

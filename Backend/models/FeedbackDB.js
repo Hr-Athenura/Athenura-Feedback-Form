@@ -106,6 +106,29 @@ const feedbackSchema = new mongoose.Schema({
 
   status: { type: String, enum: ["Pending", "Reviewed"], default: "Pending" },
 
+
+  // 🚨 COMPLAINT / ISSUE SECTION (Optional & Confidential)
+  complaint: {
+    question: {
+      type: String,
+      default: "Describe any issue or complaint you faced during the internship (Optional)",
+    },
+    answer: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    isOptional: {
+      type: Boolean,
+      default: true,
+    },
+    submittedAnonymously: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+
   // 🗓️ FORM INFO
   formSubmissionDate: { type: Date, default: Date.now },
 });

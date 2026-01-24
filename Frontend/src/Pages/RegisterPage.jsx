@@ -1,7 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Eye, EyeOff } from "lucide-react";
+import { 
+  Eye, 
+  EyeOff, 
+  User, 
+  Mail, 
+  Phone, 
+  Briefcase, 
+  Key, 
+  Lock,
+  ArrowRight
+} from "lucide-react";
+// Ensure you have your logo in the public folder
+import logo from "../../public/AthenuraLogo.png"; 
 
 const RegistrationPage = () => {
   const [form, setForm] = useState({
@@ -37,8 +49,10 @@ const RegistrationPage = () => {
     setLoading(true);
     try {
       await axios.post("/api/register", form);
-      navigate("/signup");
-      setSuccess("Registration successful! Please sign in.");
+      setSuccess("Registration successful! Redirecting...");
+      setTimeout(() => {
+          navigate("/signup");
+      }, 2000);
       setForm({
         fullName: "",
         email: "",
@@ -50,176 +64,279 @@ const RegistrationPage = () => {
       });
     } catch (err) {
       console.error("Registration failed:", err);
-      setError("Registration failed. Please try again.");
+      setError("Registration failed. Please check your details.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 p-4">
-      <div className="flex flex-col sm:flex-row w-full max-w-5xl h-auto sm:h-[640px] rounded-2xl shadow-2xl overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 via-white to-blue-50 p-4 font-sans">
+      
+      {/* Animation Styles */}
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+      `}</style>
 
-        {/* Left Panel */}
-        <div className="relative sm:w-1/2 w-full bg-gradient-to-br from-indigo-900 via-purple-800 to-purple-900 flex flex-col justify-between p-8 sm:p-10 text-white">
-          {/* Decorative Circles */}
-          <div className="absolute top-10 right-20 w-24 sm:w-32 h-24 sm:h-32 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full opacity-70 blur-sm"></div>
-          <div className="absolute bottom-20 left-10 w-28 sm:w-40 h-28 sm:h-40 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full opacity-60 blur-md"></div>
-          <div className="absolute top-32 left-28 w-20 sm:w-24 h-20 sm:h-24 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full opacity-50 blur-lg"></div>
-          <div className="absolute bottom-10 right-10 w-12 sm:w-16 h-12 sm:h-16 bg-pink-400 rounded-full opacity-40"></div>
+      {/* Main Card */}
+      <div className="flex flex-col md:flex-row w-full max-w-6xl h-[85vh] bg-white rounded-3xl shadow-2xl shadow-[#50B4C6]/20 overflow-hidden border border-white animate-fade-up">
+
+        {/* Left Panel — Brand/Info */}
+        <div className="relative md:w-5/12 bg-[#50B4C6] flex flex-col justify-between p-10 text-white overflow-hidden shrink-0">
+          
+          {/* Decorative Background */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20 animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-600/20 rounded-full blur-2xl -ml-12 -mb-12"></div>
+          <div className="absolute top-1/2 left-10 w-20 h-20 bg-cyan-300/20 rounded-full blur-xl"></div>
 
           {/* Logo */}
-          <div className="absolute top-4 left-4 z-20 flex items-center gap-3">
-            <img
-              src="Graphura.jpg"
-              alt="Graphura Logo"
-              className="h-12 w-12 sm:h-14 sm:w-14 object-contain rounded-full"
-            />
+          <div className="relative z-10">
+            <Link to="/" className="flex items-center gap-3 group w-fit">
+              <div className="bg-white p-2 rounded-xl backdrop-blur-sm ">
+                <img
+                  src={logo}
+                  alt="Athenura Logo"
+                  className="h-8 w-auto"
+                />
+              </div>
+            </Link>
           </div>
 
-          {/* Text Section */}
-          <div className="relative z-10 flex-1 flex flex-col justify-center items-center text-center mt-16 sm:mt-0">
-            <h1 className="text-2xl sm:text-3xl font-extrabold mb-3 tracking-wide drop-shadow-md">
-              Register Portal Access
+          {/* Center Text */}
+          <div className="relative z-10 flex flex-col justify-center h-full mt-8 md:mt-0">
+            <h1 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
+              Create Your <br/>
+              <span className="text-cyan-100">Access Portal</span>
             </h1>
-            <p className="text-base sm:text-lg text-gray-200 mb-2">
-              Create your account.
+            <p className="text-cyan-50 text-lg leading-relaxed max-w-sm mb-8">
+              Gain secure access to monitor intern performance, review feedback reports, and manage departmental evaluations seamlessly.
             </p>
-            <p className="text-xs sm:text-sm text-gray-300 max-w-md mx-auto leading-relaxed">
-              Gain secure access to monitor intern performance, review feedback
-              reports, and manage departmental evaluations seamlessly.
-            </p>
+
+          </div>
+
+          {/* Bottom Copyright */}
+          <div className="relative z-10 text-xs text-cyan-100/60 hidden md:block">
+            © {new Date().getFullYear()} Athenura India Pvt Ltd.
           </div>
         </div>
 
         {/* Right Panel — Form */}
-        <div className="w-full sm:w-1/2 bg-white flex flex-col justify-center px-6 sm:px-12 py-8 sm:py-10 overflow-y-auto">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 sm:mb-8">
-            Create Account
-          </h2>
+        <div className="w-full md:w-7/12 bg-white flex flex-col px-8 py-10 md:px-12 relative">
+          <div className="overflow-y-auto custom-scrollbar pr-2 h-full">
+            
+            <h2 className="text-3xl font-bold text-gray-900 mb-2 sticky top-0 bg-white z-10 pb-2">Create Account</h2>
+            <p className="text-gray-500 mb-8 sticky top-12 bg-white z-10 pb-4 border-b border-gray-100">
+              Please fill in your details to register.
+            </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Full Name */}
-            <input
-              type="text"
-              name="fullName"
-              value={form.fullName}
-              onChange={handleChange}
-              placeholder="Full Name"
-              className="w-full pb-2 border-b-2 border-gray-200 focus:border-purple-500 outline-none text-sm sm:text-base text-gray-700 placeholder-gray-400 transition-colors"
-              required
-            />
+            <form onSubmit={handleSubmit} className="space-y-5 pb-4">
+              
+              {/* Full Name */}
+              <div className="group">
+                <label className="block text-sm font-medium text-gray-700 mb-1 ml-1">Full Name</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#50B4C6] transition-colors">
+                    <User size={18} />
+                  </div>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={form.fullName}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#50B4C6] focus:ring-4 focus:ring-[#50B4C6]/10 outline-none transition-all text-gray-800"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+              </div>
 
-            {/* Email */}
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Email Address"
-              className="w-full pb-2 border-b-2 border-gray-200 focus:border-purple-500 outline-none text-sm sm:text-base text-gray-700 placeholder-gray-400 transition-colors"
-              required
-            />
+              {/* Email & Contact Grid */}
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="group">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 ml-1">Email</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#50B4C6] transition-colors">
+                      <Mail size={18} />
+                    </div>
+                    <input
+                      type="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#50B4C6] focus:ring-4 focus:ring-[#50B4C6]/10 outline-none transition-all text-gray-800"
+                      placeholder="john@athenura.in"
+                      required
+                    />
+                  </div>
+                </div>
 
-            {/* Contact Number */}
-            <input
-              type="tel"
-              name="contactNumber"
-              value={form.contactNumber}
-              onChange={handleChange}
-              placeholder="Contact Number"
-              className="w-full pb-2 border-b-2 border-gray-200 focus:border-purple-500 outline-none text-sm sm:text-base text-gray-700 placeholder-gray-400 transition-colors"
-              required
-            />
+                <div className="group">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 ml-1">Contact Number</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#50B4C6] transition-colors">
+                      <Phone size={18} />
+                    </div>
+                    <input
+                      type="tel"
+                      name="contactNumber"
+                      value={form.contactNumber}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#50B4C6] focus:ring-4 focus:ring-[#50B4C6]/10 outline-none transition-all text-gray-800"
+                      placeholder="+91 98765 43210"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
 
-            {/* Role */}
-            <input
-              type="text"
-              name="role"
-              value={form.role}
-              onChange={handleChange}
-              placeholder="Role"
-              className="w-full pb-2 border-b-2 border-gray-200 focus:border-purple-500 outline-none text-sm sm:text-base text-gray-700 placeholder-gray-400 transition-colors"
-              required
-            />
+              {/* Role & Secret Key Grid */}
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="group">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 ml-1">Role</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#50B4C6] transition-colors">
+                      <Briefcase size={18} />
+                    </div>
+                    <input
+                      type="text"
+                      name="role"
+                      value={form.role}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#50B4C6] focus:ring-4 focus:ring-[#50B4C6]/10 outline-none transition-all text-gray-800"
+                      placeholder="e.g. Mentor"
+                      required
+                    />
+                  </div>
+                </div>
 
-            {/* Secret Key */}
-            <input
-              type="text"
-              name="secretKey"
-              value={form.secretKey}
-              onChange={handleChange}
-              placeholder="Secret Key"
-              className="w-full pb-2 border-b-2 border-gray-200 focus:border-purple-500 outline-none text-sm sm:text-base text-gray-700 placeholder-gray-400 transition-colors"
-              required
-            />
+                <div className="group">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 ml-1">Secret Key</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#50B4C6] transition-colors">
+                      <Key size={18} />
+                    </div>
+                    <input
+                      type="text"
+                      name="secretKey"
+                      value={form.secretKey}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#50B4C6] focus:ring-4 focus:ring-[#50B4C6]/10 outline-none transition-all text-gray-800"
+                      placeholder="Admin Key"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
 
-            {/* Password */}
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="Password"
-                className="w-full pb-2 border-b-2 border-gray-200 focus:border-purple-500 outline-none text-sm sm:text-base text-gray-700 placeholder-gray-400 transition-colors"
-                required
-              />
+              {/* Passwords */}
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="group">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 ml-1">Password</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#50B4C6] transition-colors">
+                      <Lock size={18} />
+                    </div>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={form.password}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-10 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#50B4C6] focus:ring-4 focus:ring-[#50B4C6]/10 outline-none transition-all text-gray-800"
+                      placeholder="••••••••"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#50B4C6] transition-colors"
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="group">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 ml-1">Confirm Password</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-[#50B4C6] transition-colors">
+                      <Lock size={18} />
+                    </div>
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      value={form.confirmPassword}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-10 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#50B4C6] focus:ring-4 focus:ring-[#50B4C6]/10 outline-none transition-all text-gray-800"
+                      placeholder="••••••••"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#50B4C6] transition-colors"
+                    >
+                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Alerts */}
+              {error && (
+                <div className="flex items-center gap-2 text-red-600 bg-red-50 px-4 py-3 rounded-lg text-sm border border-red-100 animate-fade-up">
+                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  {error}
+                </div>
+              )}
+              {success && (
+                <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-3 rounded-lg text-sm border border-green-100 animate-fade-up">
+                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                  {success}
+                </div>
+              )}
+
+              {/* Submit Button */}
               <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition-colors"
+                type="submit"
+                disabled={loading}
+                className="w-full bg-[#50B4C6] hover:bg-[#3ea0b2] text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-[#50B4C6]/40 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed mt-4 flex justify-center items-center gap-2"
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {loading ? (
+                   <>
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Creating Account...
+                  </>
+                ) : (
+                  "Create Account"
+                )}
               </button>
-            </div>
 
-            {/* Confirm Password */}
-            <div className="relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                placeholder="Confirm Password"
-                className="w-full pb-2 border-b-2 border-gray-200 focus:border-purple-500 outline-none text-sm sm:text-base text-gray-700 placeholder-gray-400 transition-colors"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition-colors"
-              >
-                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
+              {/* Mobile Link */}
+              <div className="text-center pt-2 md:hidden">
+                <p className="text-sm text-gray-600">
+                  Already have an account?{" "}
+                  <Link
+                    to="/signup"
+                    className="text-[#50B4C6] font-bold hover:text-[#3ea0b2]"
+                  >
+                    Sign In
+                  </Link>
+                </p>
+              </div>
 
-            {/* Error & Success */}
-            {error && <p className="text-red-600 text-sm">{error}</p>}
-            {success && <p className="text-green-600 text-sm">{success}</p>}
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold py-3 rounded-full hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 mt-4 sm:mt-6 disabled:opacity-50"
-            >
-              {loading ? "Registering..." : "REGISTER"}
-            </button>
-
-            {/* Link */}
-            <div className="text-center mt-4">
-              <p className="text-sm text-gray-600">
-                Already have an account?{" "}
-                <Link
-                  to="/signup"
-                  className="text-purple-600 font-semibold hover:text-purple-800 transition-colors"
-                >
-                  Sign In
-                </Link>
-              </p>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
