@@ -41,7 +41,7 @@ const FeedbackForm = () => {
 
         // Complaint moved to Step 4
         complaint: { answer: '', isOptional: true },
-        
+
         Q1_social: { answer: '' },
         Q2_social: { answer: '' },
     });
@@ -263,12 +263,12 @@ const FeedbackForm = () => {
                     Q2_incharge: { answer: formData.Q2_incharge.answer },
                     Q3_incharge: { answer: formData.Q3_incharge.answer },
 
-                    complaint: { 
+                    complaint: {
                         answer: formData.complaint.answer,
                         isOptional: true,
                         submittedAnonymously: isAnonymousComplaint
                     },
-                    
+
                     Q1_social: { answer: formData.Q1_social.answer },
                     Q2_social: { answer: formData.Q2_social.answer },
                 };
@@ -427,8 +427,8 @@ const FeedbackForm = () => {
                                 <div key={step.number} className="flex items-center flex-shrink-0">
                                     <div
                                         className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md transition-all ${currentStep >= step.number
-                                                ? 'bg-gradient-to-br from-teal-500 to-teal-600 text-white scale-105'
-                                                : 'bg-gray-100 text-gray-400 border border-gray-200'
+                                            ? 'bg-gradient-to-br from-teal-500 to-teal-600 text-white scale-105'
+                                            : 'bg-gray-100 text-gray-400 border border-gray-200'
                                             }`}
                                     >
                                         <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -444,8 +444,8 @@ const FeedbackForm = () => {
                                     {index < steps.length - 1 && (
                                         <div
                                             className={`w-6 h-1 mx-2 ${currentStep > step.number
-                                                    ? 'bg-teal-500'
-                                                    : 'bg-gray-200'
+                                                ? 'bg-teal-500'
+                                                : 'bg-gray-200'
                                                 }`}
                                         />
                                     )}
@@ -486,7 +486,9 @@ const FeedbackForm = () => {
                                             'Content Writing',
                                             'UI/UX Designing',
                                             'Front-end Developer',
-                                            'Back-end Developer'
+                                            'Back-end Developer',
+                                            'Full Stack Developer',
+                                            'MERN Stack Developer'
                                         ]
                                     },
                                     { label: 'Senior/Manager *', field: 'seniorOrManager', type: 'text', placeholder: 'Enter senior/manager name' },
@@ -862,15 +864,15 @@ const FeedbackForm = () => {
                                         🚨 Optional: Report an Issue or Complaint
                                     </h3>
                                 </div>
-                                
+
                                 <div className="mb-4 p-3 sm:p-4 bg-white rounded-lg border border-red-100">
                                     <p className="text-gray-700 text-sm sm:text-base mb-3 font-['Inter']">
-                                        <strong>Note:</strong> This section is completely optional. If you faced any issues, concerns, 
-                                        or have complaints during your internship, please describe them here. All complaints will be 
+                                        <strong>Note:</strong> This section is completely optional. If you faced any issues, concerns,
+                                        or have complaints during your internship, please describe them here. All complaints will be
                                         handled confidentially.
                                     </p>
                                     <p className="text-gray-600 text-xs sm:text-sm font-['Inter']">
-                                        You can report about: Harassment, Unfair treatment, Payment issues, Work environment concerns, 
+                                        You can report about: Harassment, Unfair treatment, Payment issues, Work environment concerns,
                                         Discrimination, Safety issues, or any other grievances.
                                     </p>
                                 </div>
@@ -904,7 +906,7 @@ const FeedbackForm = () => {
                                         className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200 text-sm sm:text-base"
                                         placeholder="If you have any complaints or concerns, please describe them here. This is optional and confidential..."
                                     />
-                                    
+
                                     <div className="flex items-center text-gray-500 text-xs sm:text-sm mt-2">
                                         <input
                                             type="checkbox"
@@ -1028,14 +1030,14 @@ const FeedbackForm = () => {
                                     },
                                     {
                                         title: 'Complaint', icon: '🚨', fields: [
-                                            { 
-                                                label: 'Complaint/Issue', 
-                                                value: formData.complaint.answer || 'No complaint submitted', 
-                                                fullWidth: true 
+                                            {
+                                                label: 'Complaint/Issue',
+                                                value: formData.complaint.answer || 'No complaint submitted',
+                                                fullWidth: true
                                             },
-                                            { 
-                                                label: 'Submitted Anonymously', 
-                                                value: isAnonymousComplaint ? 'Yes' : 'No' 
+                                            {
+                                                label: 'Submitted Anonymously',
+                                                value: isAnonymousComplaint ? 'Yes' : 'No'
                                             }
                                         ]
                                     },
