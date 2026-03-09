@@ -1104,7 +1104,6 @@ const FeedbackForm = () => {
                         ) : (
                             <button
                                 type="submit"
-                                disabled={isSubmitting}
                                 className={`px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center text-sm sm:text-base ${isSubmitting || (formData.Q6_internship.answer && formData.Q6_internship.answer === originalSuggestion)
                                     ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
                                     : 'bg-gradient-to-r from-teal-500 to-emerald-600 text-white hover:from-teal-600 hover:to-emerald-700'
