@@ -13,6 +13,7 @@ import {
     Calendar,
     IdCard,
     Building2,
+    Youtube,
     UserCheck,
     Instagram,
     Linkedin,
@@ -44,6 +45,7 @@ const FeedbackForm = () => {
 
         Q1_social: { answer: '' },
         Q2_social: { answer: '' },
+        Q3_social: { answer: '' },
     });
 
     const [errors, setErrors] = useState({});
@@ -190,6 +192,7 @@ const FeedbackForm = () => {
                 // Complaint is optional, so no validation needed
                 if (!formData.Q1_social.answer) newErrors.Q1_social = 'This field is required';
                 if (!formData.Q2_social.answer) newErrors.Q2_social = 'This field is required';
+                if (!formData.Q3_social.answer) newErrors.Q3_social = 'This field is required';
                 break;
         }
 
@@ -271,6 +274,7 @@ const FeedbackForm = () => {
 
                     Q1_social: { answer: formData.Q1_social.answer },
                     Q2_social: { answer: formData.Q2_social.answer },
+                    Q3_social: { answer: formData.Q3_social.answer },
                 };
 
                 await submitFeedbackToAPI(submissionData);
@@ -298,6 +302,7 @@ const FeedbackForm = () => {
                     complaint: { answer: '', isOptional: true },
                     Q1_social: { answer: '' },
                     Q2_social: { answer: '' },
+                    Q3_social: { answer: '' },
                 });
                 setIsAnonymousComplaint(false);
                 setCurrentStep(1);
@@ -941,6 +946,12 @@ const FeedbackForm = () => {
                                         platform: 'LinkedIn',
                                         icon: <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />,
                                         link: 'https://www.linkedin.com/company/Athenura'
+                                    },
+                                    {
+                                        key: 'Q3_social',
+                                        platform: 'Youtube',
+                                        icon: <Youtube className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />,
+                                        link: 'https://www.youtube.com/@Athenura'
                                     }
                                 ].map(({ key, platform, icon, link }) => (
                                     <div key={key} className="p-4 sm:p-6 border-2 border-blue-100 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 hover:shadow-lg transition-all duration-300">
@@ -970,6 +981,7 @@ const FeedbackForm = () => {
                                                 />
                                                 <span className="ml-2 text-gray-700 font-medium text-sm sm:text-base">Not yet</span>
                                             </label>
+                                            
                                         </div>
                                         <a
                                             href={link}
@@ -1044,7 +1056,8 @@ const FeedbackForm = () => {
                                     {
                                         title: 'Social Media', icon: '📱', fields: [
                                             { label: 'Instagram', value: formData.Q1_social.answer },
-                                            { label: 'LinkedIn', value: formData.Q2_social.answer }
+                                            { label: 'LinkedIn', value: formData.Q2_social.answer },
+                                            { label: 'Youtube', value: formData.Q3_social.answer }
                                         ]
                                     }
                                 ].map((section, index) => (

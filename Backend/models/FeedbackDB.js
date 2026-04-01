@@ -92,14 +92,21 @@ const feedbackSchema = new mongoose.Schema({
   Q1_social: {
     question: {
       type: String,
-      default: "Are you following Graphura on Instagram?",
+      default: "Are you following Athenura on Instagram?",
     },
     answer: { type: String, enum: ["Yes", "No", ""], default: "" },
   },
   Q2_social: {
     question: {
       type: String,
-      default: "Are you following Graphura on LinkedIn?",
+      default: "Are you following Athenura on LinkedIn?",
+    },
+    answer: { type: String, enum: ["Yes", "No", ""], default: "" },
+  },
+  Q3_social: {
+    question: {
+      type: String,
+      default: "Are you following Athenura on YouTube?",
     },
     answer: { type: String, enum: ["Yes", "No", ""], default: "" },
   },
