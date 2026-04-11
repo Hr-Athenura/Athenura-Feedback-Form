@@ -41,15 +41,6 @@ export const submitFeedback = async (req, res) => {
       });
     }
 
-    // Prevent duplicate submission
-    const existingFeedback = await Feedback.findOne({ internUniqueId });
-    if (existingFeedback) {
-      return res.status(409).json({
-        success: false,
-        message: 'Feedback already submitted for this intern ID'
-      });
-    }
-
     // Create feedback document
     const newFeedback = new Feedback({
       // Intern Details
