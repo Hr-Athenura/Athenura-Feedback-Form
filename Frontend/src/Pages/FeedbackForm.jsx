@@ -50,7 +50,6 @@ const FeedbackForm = () => {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [originalSuggestion, setOriginalSuggestion] = useState('');
     const [showSuggestions, setShowSuggestions] = useState({});
     const [skillSearch, setSkillSearch] = useState('');
     const [showSkillSuggestions, setShowSkillSuggestions] = useState(false);
@@ -148,10 +147,6 @@ const FeedbackForm = () => {
                 answer: value
             }
         }));
-
-        if (questionKey === 'Q6_internship' && !originalSuggestion) {
-            setOriginalSuggestion(value);
-        }
     };
 
     const toggleSuggestion = (key) => {
@@ -236,14 +231,6 @@ const FeedbackForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-
-        const isSuggestionModified = formData.Q6_internship.answer.trim() !== originalSuggestion;
-
-        if (!isSuggestionModified && originalSuggestion) {
-            alert('Please make specific changes to the suggestions field before submitting.');
-            setIsSubmitting(false);
-            return;
-        }
 
         if (validateStep(currentStep)) {
             try {
@@ -1078,16 +1065,6 @@ const FeedbackForm = () => {
                                         </div>
                                     </div>
                                 ))}
-
-                                {/* Validation Warning */}
-                                {formData.Q6_internship.answer && formData.Q6_internship.answer === originalSuggestion && (
-                                    <div className="bg-red-50 border-2 border-red-200 rounded-lg sm:rounded-xl p-3 sm:p-4 animate-pulse">
-                                        <p className="text-red-700 font-medium flex items-center text-sm sm:text-base font-['Inter']">
-                                            <span className="mr-2 text-lg sm:text-xl">⚠️</span>
-                                            Please make specific changes to your suggestions before submitting
-                                        </p>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     )}
